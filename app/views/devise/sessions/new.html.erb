@@ -1,0 +1,20 @@
+<h1>Sign in</h1>
+
+<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => 'form' }) do |f| %>
+<div class="form-group">
+	<%= f.label :email, :class => "control-label"  %><br />
+	<%= f.email_field :email, :class => 'form-control input-lg', :placeholder => 'demo@ias1.com' %>
+</div>
+
+<div class="form-group"><%= f.label :password, :class => "control-label" %><br />
+	<%= f.password_field :password, :class => 'form-control input-lg', :placeholder => '**********' %></div>
+
+	<% if devise_mapping.rememberable? -%>
+	<div class="form-group"><%= f.check_box :remember_me %> <%= f.label :remember_me, :class => "control-label"  %></div>
+	<% end -%>
+
+	<div class="actions">
+	<%= f.submit "Sign in", :class => 'btn btn-default' %></div>
+<% end %>
+
+	<%= render "devise/shared/links" %>

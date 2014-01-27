@@ -1,0 +1,37 @@
+
+<h1>Work Orders</h1>
+
+<p class="text-right">
+	<%= link_to 'New work order', new_service_request_path %>
+</p>
+<table class="table table-striped">
+  <tr>
+    <th class="span2">Address</th>
+    <th class="span2">Title</th>
+    <th class="span6">Description</th>
+	<th>Status</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @service_requests.each do |service_request| %>
+  <tr>
+    <td><%= service_request.address %></td>
+    <td><%= truncate(service_request.title) %></td>
+    <td><%= truncate(service_request.description, length: 50) %></td>
+	<td>
+		<% if(service_request.status == 2) %>
+			<span class="label label-default">Close</span>
+		<% elsif (service_request.status == 3)%>
+			<span class="label label-danger">Block</span>
+		<% else %>
+			<span class="label label-success">Open</span>
+		<% end %>
+	</td>
+    <td><%= link_to 'View', service_request %></td>
+    <td><%= link_to 'Edit', edit_service_request_path(service_request) %></td>
+    <td><%= link_to 'Delete', service_request, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
