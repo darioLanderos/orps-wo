@@ -116,9 +116,9 @@
 			    <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
 				</small></p>
 			  <% else %>
-				<p class="text-right"><small> 
-			    	<%= link_to "Sign up", new_user_registration_path %> or <%= link_to "Sign in", new_user_session_path %>
-				</small></p>
+				<p class="text-center credit text-muted">
+					This is not an open app, if you need to get a username please contact your supervisor about it.
+				</p>
 			  <% end %>
 			</div>
 			<%= yield %>
