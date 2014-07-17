@@ -1,37 +1,60 @@
+  <%= content_for(:title, "Work Orders") %>
 
-<h1>Work Orders</h1>
+  <p class="text-right">
+  	<%= link_to 'New work order', new_service_request_path %>
+  </p>
 
-<p class="text-right">
-	<%= link_to 'New work order', new_service_request_path %>
-</p>
-<table class="table table-striped">
-  <tr>
-    <th class="span2">Address</th>
-    <th class="span2">Title</th>
-    <th class="span6">Description</th>
-	<th>Status</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+  <div class="panel panel-grey margin-bottom-40">
+    <div class="panel-heading">
+      <h3 class="panel-title"><i class="fa fa-flag"></i> Your work orders</h3>
+    </div>
+    <div class="panel-body">
+      <table class="table table-hover">
+        <tr>
+          <th></th>
+          <th class="span2">Address</th>
+          <th class="span2">Title</th>
+          <th class="span6">Description</th>
+          <th>Status</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
 
-<% @service_requests.each do |service_request| %>
-  <tr>
-    <td><%= service_request.address %></td>
-    <td><%= truncate(service_request.title) %></td>
-    <td><%= truncate(service_request.description, length: 50) %></td>
-	<td>
-		<% if(service_request.status == 2) %>
-			<span class="label label-default">Close</span>
-		<% elsif (service_request.status == 3)%>
-			<span class="label label-danger">Block</span>
-		<% else %>
-			<span class="label label-success">Open</span>
-		<% end %>
-	</td>
-    <td><%= link_to 'View', service_request %></td>
-    <td><%= link_to 'Edit', edit_service_request_path(service_request) %></td>
-    <td><%= link_to 'Delete', service_request, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
+        <% @service_requests.each do |service_request| %>
+        <tr>
+          <td>
+            <% if(service_request.category.id == 1) %>
+            <span class="badge rounded-2x badge-light">M</span>
+            <% elsif (service_request.category.id == 2)%>
+            <span class="badge rounded-2x badge-light">I</span>
+            <% else %>
+            <span class="badge rounded-2x badge-light">G</span>
+            <% end %>
+          </td>
+          <td><%= service_request.address %></td>
+          <td><%= truncate(service_request.title) %></td>
+          <td><%= truncate(service_request.description, length: 50) %></td>
+          <td>
+            <% if(service_request.status == 2) %>
+            <span class="label label-light">Archived</span>
+            <% elsif (service_request.status == 3)%>
+            <span class="label label-yellow">Pending</span>
+            <% else %>
+            
+            <% end %>
+
+            <% if(service_request.alert_date < Date.today) %>
+            <span class="label label-danger"><i class="fa fa-exclamation"></i>&nbsp;Expired</span>
+            <% elsif (service_request.warning_date <= Date.today)%>
+            <span class="label label-warning"><i class="fa fa-flag"></i>&nbsp;Expiring</span>
+            <% end %>
+          </td>
+          <td><%= link_to 'View', service_request %></td>
+          <td><%= link_to 'Edit', edit_service_request_path(service_request) %></td>
+          <td><%= link_to 'Delete', service_request, confirm: 'Are you sure?', method: :delete %></td>
+        </tr>
+        <% end %>
+      </table>
+    </div>                      
+  </div>

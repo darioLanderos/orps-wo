@@ -1,138 +1,123 @@
 <!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
 <html>
 <head>
 	<title>InterAccess Systems - Service Requests</title>
-	<%= stylesheet_link_tag    "application", :media => "all" %>
+	
+	<!-- Meta -->
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<meta content="InterAccess Systems Work Orders application" name="description">
+	<meta content="Dario Landeros" name="author">
+	
 	<%= javascript_include_tag "application" %>
-	<%= csrf_meta_tags %>
 
-	<!-- Bootstrap -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-	<link rel="stylesheet" href="http://getbootstrap.com/examples/sticky-footer-navbar/sticky-footer-navbar.css">
+	<%= stylesheet_link_tag "bootstrap", :media => "all" %>
+	<%= stylesheet_link_tag "style", :media => "all" %>
+	<%= stylesheet_link_tag "custom", :media => "all" %>
+	<%= stylesheet_link_tag "blue", :media => "all" %>
+	<%= stylesheet_link_tag "iphone-style", :media => "all" %>
+	<%= stylesheet_link_tag "font-awesome", :media => "all" %>
 	
+	<%= yield(:header) %>
+	<%= csrf_meta_tags %>
 	
-	<style>
-	#logo_container{
-		padding: 0px 15px;
-	}
-	.ui-autocomplete {
-	    /* Remove the whitespace around the individual items. */
-	    padding: 0px;
-		display: block;
-		margin-left: 0;
-		margin-right: 0;
-		background-color: #fff;
-		border-style: solid;
-		border-width: 1px;
-		border-color: #ddd;
-		border-radius: 4px 4px 0 0;
-		box-shadow: none;
-		width: 60%;
-		list-style-type: none;
-		font-family: verdana, arial, helvetica, sans-serif;
-		font-size: 18px;
-		line-height: 1.33;
-		color: #555;
-	}
-	
-	.ui-menu .ui-menu-item a {	
-		display: block;
-		padding: 3px 20px;
-		clear: both;
-		font-weight: normal;
-		line-height: 1.428571429;
-		white-space: nowrap;
-		color: #555;
-		cursor: pointer;
-	}
-	
-	.ui-menu .ui-menu-item a:hover{
-		color: #262626;
-		text-decoration: none;
-		background-color: #f5f5f5;	
-	}
-	
-	.ui-menu .ui-menu-item a:active {
-		color: #262626;
-		text-decoration: none;
-		background-color: #f5f5f5;
-	}
-	
-	.ui-helper-hidden-accessible {
-		display: none;
-	}
-	
-	.ui-state-focus
-	{
-	    color: #262626;
-		text-decoration: none;
-		background-color: #f5f5f5;
-	}
-	
-	.header a{
-		font-size: 15px;
-		font-weight: 400;
-		padding: 9px 20px;
-	}
-	</style>
-	
+	<!-- Latest compiled and minified CSS 
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> -->
 </head>
 <body>
-	<div id="wrap">
-		<div class="header navbar navbar-default navbar-fixed-top" role="navigation">
-			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<%= link_to image_tag("iaslogo_full.png"), :root, :class => 'navbar-brand', :id => 'logo_container' %>
-					
-				</div>
-				<div class="collapse navbar-collapse">
-					<ul class="nav navbar-nav">
-						<li class="active"><%= link_to "Home", :root %></li>
-						 <!-- <li><a href="#about">About</a></li> -->
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><%= link_to "By Address", reports_path %></li>
-							</ul>
+	<div id="wrapper">
+		<!--=== Header ===-->
+		<div class="header">
+		    <!--=== Topbar ===-->
+			<div class="topbar">
+	            <div class="container">
+	                <!-- Topbar Navigation -->
+	                <ul class="loginbar pull-right"> 
+	                	<li>
+							<% if user_signed_in? %>
+							    <small> 
+									Hi <b><%= current_user.email %></b>. Not you?
+								</small>
+								<%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+							  <% else %>
+							  		<%= link_to "Sign in", new_session_path(resource_name) %>
+							  <% end %>
 						</li>
-						<li><%= link_to "Contact", contact_path %></li>
-					</ul>
-				</div><!--/.nav-collapse -->
-			</div>
+						<li class="topbar-devider"></li>
+	                    <li><a href="page_faq.html">Help</a></li>        
+	                </ul>
+	                <!-- End Topbar Navigation -->
+	            </div>
+	        </div>
+		    <!--=== End Topbar ===-->
+		    <!--=== Navbar ===-->
+		    <div class="navbar navbar-default" role="navigation">
+				<div class="container">
+					<!--=== Navbar Header ===-->
+		        	<div class="navbar-header">
+						<%= link_to image_tag("iaslogo.png", :style => 'margin-top:-34px; margin-left:-18px'), :root, :id => 'logo_container' %>
+					</div>
+					<!--=== End Navbar Header ===-->
+					
+					<!--=== Navbar Links ===-->
+					<div class="collapse navbar-collapse navbar-responsive-collapse">
+						<ul class="nav navbar-nav">
+							<li <%= controller_name == 'service_requests' ? "class='active'" : "" %> >
+								<%= link_to "Home", :root %></li>
+							<li <%= controller_name == 'reports' ? "class='dropdown active'" : "class='dropdown'" %> >
+								<a href="#" class="dropdown-toggle">Reports</a>
+								<ul class="dropdown-menu">
+									<li><%= link_to "By Address", reports_path %></li>
+									<li><%= link_to "By Status", "/reports/by_status" %></li>
+									<li><%= link_to "By Category", "/reports/by_category" %></li>
+								</ul>
+							</li>
+							<li <%= controller_name == 'contact' ? "class=active" : "" %>>
+								<%= link_to "Contact", contact_path %></li>
+						</ul>
+					</div>
+					<!--=== End Navbar Links ===-->
+				</div>
+		    </div>
+		    <!--=== End Navbar ===-->
 		</div>
-		<div class="container">
-			<div id="user_nav">
-			  <% if user_signed_in? %>
-			    <p class="text-right"><small> 
-					Hi <b><%= current_user.email %></b>. Not you?
-			    <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
-				</small></p>
-			  <% else %>
-				<p class="text-center credit text-muted">
-					This is not an open app, if you need to get a username please contact your supervisor about it.
-				</p>
-			  <% end %>
-			</div>
+		<!--=== End Header ===-->
+		<!--=== Title / Breadcrumbs ===-->
+		<div class="breadcrumbs">
+			<div class="container">
+				<h1 class="pull-left"><%= yield(:title) %></h1>
+				<ul class="pull-right breadcrumb">
+				</ul>
+			</div><!--/container-->
+		</div>
+		<!--=== End Title / Breadcrumbs ===-->		
+		<div class="container content">
 			<%= yield %>
 		</div>
-	</div>
-	<div id="footer">
-		<div class="container">
-			<p class="text-muted credit text-center">All rights reserved to <a href="http://www.ias1.com">InterAccess Systems</a> ©</p>
+		<!--=== Footer ===-->
+		<div class="footer sticky-footer">
+			<div class="container">
+				<div class="row">
+					<p class="text-muted credit text-center">
+						All rights reserved to <a href="http://www.ias1.com">InterAccess Systems</a> ©
+		                        <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+				</div>
+			</div>
 		</div>
+		<!--=== End Footer ===-->
 	</div>
 	<!-- Latest compiled and minified JavaScript -->
-	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
-	<!-- <script src="http://code.j	query.com/jquery-1.9.1.js"></script>-->
-	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+	<%= javascript_include_tag "jquery-ui.js" %>
+	<%= javascript_include_tag "bootstrap.min.js" %>
+	<%= javascript_include_tag "spin.min.js" %>
+	<%= javascript_include_tag "ladda.min.js" %>
+	<%= javascript_include_tag "iphone-style-checkboxes.js" %>
+	
+
 	<script type="text/javascript">
 	    $(document).ready(function() {
 	      $(':checkbox').iphoneStyle({
@@ -141,5 +126,6 @@
 			});
 	    });
 	</script>
+	<%= yield(:js_scripts) %>
 </body>
 </html>

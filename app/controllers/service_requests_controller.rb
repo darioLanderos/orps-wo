@@ -29,6 +29,10 @@ class ServiceRequestsController < ApplicationController
   # GET /service_requests/new.json
   def new
     @service_request = ServiceRequest.new
+    @service_request.warning_date = Date.tomorrow
+    @service_request.alert_date = Date.tomorrow + 1
+    @categories = Category.all(:order => 'name DESC')
+    @service_request.category = @categories.first
 
     respond_to do |format|
       format.html # new.html.erb
@@ -39,6 +43,7 @@ class ServiceRequestsController < ApplicationController
   # GET /service_requests/1/edit
   def edit
     @service_request = ServiceRequest.find(params[:id])
+    @categories = Category.all(:order => 'name DESC')
   end
 
   # POST /service_requests

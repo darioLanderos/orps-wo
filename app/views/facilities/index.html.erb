@@ -1,0 +1,25 @@
+<h1>Facilities</h1>
+
+<p class="text-right">
+	<%= link_to 'New Facility', new_facility_path %>
+</p>
+
+<table  class="table table-striped">
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @facilities.each do |facility| %>
+  <tr>
+    <td><%= facility.name %></td>
+    <td><%= facility.description %></td>
+    <td><%= link_to 'View', facility %></td>
+    <td><%= link_to 'Edit', edit_facility_path(facility) %></td>
+    <td><%= link_to 'Delete', facility, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>

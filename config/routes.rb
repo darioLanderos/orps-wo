@@ -1,7 +1,15 @@
 Cmms::Application.routes.draw do
+  resources :categories
+
+  resources :facilities
+
   devise_for :users
   
   match 'reports/by_address'
+
+  match 'reports/by_status'
+
+  match 'reports/by_category'
   
   match 'reports', to: 'reports#by_address'
   

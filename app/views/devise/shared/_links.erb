@@ -10,9 +10,8 @@
 <%# end -%>
 
 <%- if devise_mapping.recoverable? && controller_name != 'passwordds' %>
-	<p>
-  		<%= link_to "Forgot your password?", new_password_path(resource_name) %>
-  	</p>
+	<h4>Forget your Password?</h4>
+	<p>no worries, <%= link_to "Click Here", new_password_path(resource_name) %> to reset your password.</p>
 <% end -%>
 
 <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>

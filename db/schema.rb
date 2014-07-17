@@ -11,7 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131207002724) do
+ActiveRecord::Schema.define(:version => 20140715220528) do
+
+  create_table "categories", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "facilities", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "properties", :force => true do |t|
     t.integer  "number"
@@ -27,12 +40,18 @@ ActiveRecord::Schema.define(:version => 20131207002724) do
     t.string   "address"
     t.string   "title"
     t.text     "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.integer  "user_id"
     t.integer  "status"
+    t.date     "warning_date"
+    t.date     "alert_date"
+    t.string   "call_back_phone"
+    t.string   "caller_name"
+    t.integer  "category_id"
   end
 
+  add_index "service_requests", ["category_id"], :name => "index_service_requests_on_category_id"
   add_index "service_requests", ["user_id"], :name => "index_service_requests_on_user_id"
 
   create_table "users", :force => true do |t|
