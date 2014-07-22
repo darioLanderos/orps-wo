@@ -7,39 +7,60 @@
 	<%= link_to 'Back', service_requests_path %>
 </p>
 
-<h2><%= @service_request.address %></h2>
+<div class="tag-box tag-box-v3">
+	<div class="headline">
+		<h4>Work Order Details</h4>
+	</div>
+<div class="form-group">
+	<p class="lead"><b>
+		<%= @service_request.address %></b></p>
+</div>
+<div class="form-group">
+	Title:
+	<p class="lead">
+		<%= @service_request.title %>
+	</p>
+</div>
+<div class="form-group">
+	Description:
+	<p class="lead">
+		<%= @service_request.description %>
+	</p>
+</div>
+<div class="form-group">
+	Status:
+	<p class="lead">
+		<% if(@service_request.status == 2) %>
+			<span class="label label-default">Close</span>
+		<% elsif (@service_request.status == 3)%>
+			<span class="label label-danger">Block</span>
+		<% else %>
+			<span class="label label-success">Open</span>
+		<% end %>
+	</p>
+</div>
+<div class="form-group">
+	Created on:
+	<p class="lead">
+		<%= @service_request.created_at.strftime("%b %d %Y") %> at <%= @service_request.created_at.strftime("%H:%M") %> - <%= distance_of_time_in_words(@service_request.created_at, Time.now) %> ago
+	</p>
+</div>
 
-<h3>Title:</h3>
-<p class="lead">
-  <%= @service_request.title %>
-</p>
-
-<h3>Description:</h3>
-<p class="lead">
-<%= @service_request.description %>
-</p>
-
-<h3>Status:</h3>
-<% if(@service_request.status == 2) %>
-	<span class="label label-default">Close</span>
-<% elsif (@service_request.status == 3)%>
-	<span class="label label-danger">Block</span>
-<% else %>
-	<span class="label label-success">Open</span>
-<% end %>
-<h3>Created on:</h3>
-<p class="lead">
-	<%= @service_request.created_at.strftime("%b %d %Y") %> at <%= @service_request.created_at.strftime("%H:%M") %> - <%= distance_of_time_in_words(@service_request.created_at, Time.now) %> ago
-</p>
 
 <% if(@service_request.updated_at != @service_request.created_at) %>
-<h3>Last modified on:</h3>
-<p class="lead">
-	<%= @service_request.updated_at.strftime("%b %d %Y") %> at <%= @service_request.updated_at.strftime("%H:%M") %> - <%= distance_of_time_in_words(@service_request.updated_at, Time.now) %> ago
-</p>
+<div class="form-group">
+	Last modified on:
+	<p class="lead">
+		<%= @service_request.updated_at.strftime("%b %d %Y") %> at <%= @service_request.updated_at.strftime("%H:%M") %> - <%= distance_of_time_in_words(@service_request.updated_at, Time.now) %> ago
+	</p>
+</div>
 <% end %>
+<div class="form-group">
+	Created by:
+	<p class="lead">
+		<%= @the_creator != nil ? @the_creator.email : "Unknown" %>
+	</p>
+</div>
 
-<h3>Created by:</h3>
-<p class="lead">
-	<%= @the_creator != nil ? @the_creator.email : "Unknown" %>
-</p>
+
+</div>

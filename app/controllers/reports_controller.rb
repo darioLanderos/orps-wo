@@ -16,10 +16,12 @@ class ReportsController < ApplicationController
   end
 
   def by_status
-    if params[:search]
-      @service_requests = ServiceRequest.find(:all, :conditions => ['status LIKE ?', "%#{params[:search]}%"])
+    if ((params[:search]) && (params[:search] != "0"))
+      @service_requests = ServiceRequest.find(:all, :conditions => ['status = ?', "#{params[:search]}"])
+      @received_params = params[:search]
     else
       @service_requests = ServiceRequest.all
+      @received_params = "Nothing received"
     end
 
     respond_to do |format|
@@ -29,10 +31,12 @@ class ReportsController < ApplicationController
   end
 
   def by_category
-    if params[:search]
-      @service_requests = ServiceRequest.find(:all, :conditions => ['category LIKE ?', "%#{params[:search]}%"])
+    if ((params[:search])  && (params[:search] != "0"))
+      @service_requests = ServiceRequest.find(:all, :conditions => ['category_id = ?', "#{params[:search]}"])
+      @received_params = params[:search]
     else
       @service_requests = ServiceRequest.all
+      @received_params = "Nothing received"
     end
 
     respond_to do |format|

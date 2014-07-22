@@ -1,6 +1,6 @@
 <%= content_for(:title, "Work Orders by Address") %>
 
-<p><span class="help-block">Look for the desired property then hit the "Search" button.</span></p>
+<p><span class="help-block">Look for the desired property then hit the "Search" button, if you need to show all the results just clear the textbox and hit the button again.</span></p>
 <br/>
 
 <%= form_tag reports_path, :method => 'get', :class => 'form-inline' do %>
@@ -39,17 +39,17 @@
           <td><%= truncate(service_request.description, length: 50) %></td>
           <td>
             <% if(service_request.status == 2) %>
-            <span class="label label-light">Archived</span>
+            	<span class="label label-dark">Archived</span>
             <% elsif (service_request.status == 3)%>
-            <span class="label label-yellow">Pending</span>
-            <% else %>
-            
+            	<span class="label label-yellow">Pending</span>
             <% end %>
 
-            <% if(service_request.alert_date < Date.today) %>
-            <span class="label label-danger"><i class="fa fa-exclamation"></i>&nbsp;Expired</span>
-            <% elsif (service_request.warning_date <= Date.today)%>
-            <span class="label label-warning"><i class="fa fa-flag"></i>&nbsp;Expiring</span>
+            <% if(service_request.status != 2) %>
+            	<% if(service_request.alert_date < Date.today) %>
+            		<span class="label label-danger">Expired</span>
+            	<% elsif (service_request.warning_date <= Date.today)%>
+            		<span class="label label-warning">Expiring</span>
+            	<% end %>
             <% end %>
           </td>
           <td><%= link_to 'View', service_request %></td>
@@ -1270,7 +1270,24 @@ $(function() {
 	"Lot 996", 
 	"Lot 997", 
 	"Lot 998", 
-	"Lot 999"
+	"Lot 999",
+	"La Palma Clubhouse",
+	"El Saguaro Clubhouse",
+	"Maintenance Building/Yard",
+	"Mechanics Shop",
+	"Main Laundry",
+	"Administration Building",
+	"Security Gate",
+	"Satellite A",
+	"Satellite B",
+	"Satellite C",
+	"Satellite D",
+	"Satellite E",
+	"Satellite F",
+	"La Palma Cafe",
+	"Convenience Store",
+	"Gym",
+	"Other"
 		];
 	$( "#search" ).autocomplete({
 		source: availableProperties

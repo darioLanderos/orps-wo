@@ -5,7 +5,7 @@
 
 <%= form_tag '/reports/by_status', :method => 'get', :class => 'form-inline' do %>
 	<div class="form-group">
-		<%= select_tag( :search, options_for_select([["Open", "1"], ["Archived", "2"], ["Pending", "3"]], ), :class => "form-control  input-lg" )%>
+		<%= select_tag( :search, options_for_select([["All", "0"], ["Open", "1"], ["Archived", "2"], ["Pending", "3"]], params[:search]), :class => "form-control  input-lg" )%>
 	</div>
 	<%= submit_tag "Search", :name => nil, :class => 'btn btn-default btn-lg' %>
 <% end %>

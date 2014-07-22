@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140715220528) do
+ActiveRecord::Schema.define(:version => 20140718184618) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(:version => 20140715220528) do
     t.string   "call_back_phone"
     t.string   "caller_name"
     t.integer  "category_id"
+    t.text     "work_performed"
   end
 
   add_index "service_requests", ["category_id"], :name => "index_service_requests_on_category_id"

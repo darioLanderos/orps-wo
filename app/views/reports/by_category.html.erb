@@ -3,9 +3,9 @@
 <p><span class="help-block">Select the desired category to filter then hit the "Search" button.</span></p>
 <br/>
 
-<%= form_tag '/reports/by_Category', :method => 'get', :class => 'form-inline' do %>
+<%= form_tag '/reports/by_category', :method => 'get', :class => 'form-inline' do %>
 	<div class="form-group">
-		<%= select_tag( :search, options_for_select([["Maintenance", "1"], ["Irrigation", "2"], ["Grounds", "3"]], ), :class => "form-control  input-lg" )%>
+		<%= select_tag( :search, options_for_select([["All", "0"], ["Maintenance", "1"], ["Irrigation", "2"], ["Grounds", "3"]], params[:search]), :class => "form-control  input-lg" )%>
 	</div>
 	<%= submit_tag "Search", :name => nil, :class => 'btn btn-default btn-lg' %>
 <% end %>

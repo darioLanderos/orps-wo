@@ -42,6 +42,10 @@
 		<%= f.label :status, :class => "control-label" %> :<br />
 		<%= f.select( :status, options_for_select([["Open", "1"], ["Archived", "2"], ["Pending", "3"]], :selected => @service_request.status), {}, { :class => "form-control  input-lg"} )%>
 	</div>
+	<div class="form-group">
+		<%= f.label :work_performed, :class => "control-label" %> :<br />
+		<%= f.text_area :work_performed, :class => 'form-control input-lg', :rows => '4' %>
+	</div>
 	<% end %>
 	<div class="form-group">
 		<%= f.label :caller_name, :class => "control-label" %> :<br />
@@ -1293,7 +1297,24 @@ $(document).ready(function() {
 	"Lot 996", 
 	"Lot 997", 
 	"Lot 998", 
-	"Lot 999"
+	"Lot 999",
+	"La Palma Clubhouse",
+	"El Saguaro Clubhouse",
+	"Maintenance Building/Yard",
+	"Mechanics Shop",
+	"Main Laundry",
+	"Administration Building",
+	"Security Gate",
+	"Satellite A",
+	"Satellite B",
+	"Satellite C",
+	"Satellite D",
+	"Satellite E",
+	"Satellite F",
+	"La Palma Cafe",
+	"Convenience Store",
+	"Gym",
+	"Other"
 		];
 	$( "#service_request_address" ).autocomplete({
 		source: availableProperties
