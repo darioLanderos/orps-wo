@@ -6,8 +6,8 @@
     <span class="badge badge-dark">G</span><small> Grounds &nbsp;</small>
     <span class="label label-success">&nbsp;</span><small> Open &nbsp;</small>
     <span class="label label-yellow">&nbsp;</span><small> Pending &nbsp;</small>
-    <span class="label label-warning">&nbsp;</span><small> Expiring &nbsp;</small>
-    <span class="label label-danger">&nbsp;</span><small> Expired &nbsp;</small>
+    <span class="label label-warning"><i class="fa fa-exclamation"></i></span><small> Expiring &nbsp;</small>
+    <span class="label label-danger"><i class="fa fa-exclamation"></i></span><small> Expired &nbsp;</small>
     |&nbsp;
   	<%= link_to 'New work order', new_service_request_path %>
   </p>
@@ -48,10 +48,10 @@
             <% end %>
           </td>
           <td>
-            <% if(service_request.alert_date < Date.today) %>
-              <span class="label label-danger">&nbsp;</span>
-            <% elsif (service_request.warning_date <= Date.today)%>
-              <span class="label label-warning">&nbsp;</span>
+            <% if(service_request.alert_date < Date.today) #if(expired) %>
+              <span class="label label-danger"><i class="fa fa-exclamation"></i></span>
+            <% elsif (service_request.warning_date <= Date.today) #if(expiring) %>
+              <span class="label label-warning"><i class="fa fa-exclamation"></i></span>
             <% end %>
           </td>
           <td><%= link_to 'View', service_request %></td>

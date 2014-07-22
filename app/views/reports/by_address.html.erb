@@ -4,59 +4,71 @@
 <br/>
 
 <%= form_tag reports_path, :method => 'get', :class => 'form-inline' do %>
-	<div class="form-group">
-		<%= text_field_tag :search, params[:search], :class => 'form-control input-lg', :placeholder => 'Ex. 1 Main Drive' %>
-	</div>
-	<%= submit_tag "Search", :name => nil, :class => 'btn btn-default btn-lg' %>
+<div class="form-group">
+	<%= text_field_tag :search, params[:search], :class => 'form-control input-lg', :placeholder => 'Ex. 1 Main Drive' %>
+</div>
+<%= submit_tag "Search", :name => nil, :class => 'btn btn-default btn-lg' %>
 <% end %>
-<br />
-
+<p class="text-right">
+	<span class="badge badge-dark">M</span><small> Maintenance &nbsp;</small>
+	<span class="badge badge-dark"> I </span><small> Irrigations &nbsp;</small>
+	<span class="badge badge-dark">G</span><small> Grounds &nbsp;</small>
+	<span class="label label-success">&nbsp;</span><small> Open &nbsp;</small>
+	<span class="label label-yellow">&nbsp;</span><small> Pending &nbsp;</small>
+	<span class="label label-default">&nbsp;</span><small> Archived &nbsp;</small>
+	<span class="label label-warning"><i class="fa fa-exclamation"></i></span><small> Expiring &nbsp;</small>
+	<span class="label label-danger"><i class="fa fa-exclamation"></i></span><small> Expired &nbsp;</small>
+</p>
 <table class="table table-striped">
-  <tr>
-    <th></th>
-          <th class="span2">Address</th>
-          <th class="span2">Title</th>
-          <th class="span6">Description</th>
-          <th>Status</th>
-          <th></th>
-          <th></th>
-          <th></th>
-  </tr>
+	<tr>
+		<th class="span2">Address</th>
+		<th class="span2">Title</th>
+		<th class="span6">Description</th>
+		<th>Status</th>
+		<th>Category</th>
+		<th></th>
+		<th></th>
+		<th></th>
+		<th></th>
+	</tr>
 
-<% @service_requests.each do |service_request| %>
-  <tr>
-          <td>
-            <% if(service_request.category.id == 1) %>
-            <span class="badge rounded-2x badge-light">M</span>
-            <% elsif (service_request.category.id == 2)%>
-            <span class="badge rounded-2x badge-light">I</span>
-            <% else %>
-            <span class="badge rounded-2x badge-light">G</span>
-            <% end %>
-          </td>
-          <td><%= service_request.address %></td>
-          <td><%= truncate(service_request.title) %></td>
-          <td><%= truncate(service_request.description, length: 50) %></td>
-          <td>
-            <% if(service_request.status == 2) %>
-            	<span class="label label-dark">Archived</span>
-            <% elsif (service_request.status == 3)%>
-            	<span class="label label-yellow">Pending</span>
-            <% end %>
-
-            <% if(service_request.status != 2) %>
-            	<% if(service_request.alert_date < Date.today) %>
-            		<span class="label label-danger">Expired</span>
-            	<% elsif (service_request.warning_date <= Date.today)%>
-            		<span class="label label-warning">Expiring</span>
-            	<% end %>
-            <% end %>
-          </td>
-          <td><%= link_to 'View', service_request %></td>
-          <td><%= link_to 'Edit', edit_service_request_path(service_request) %></td>
-          <td><%= link_to 'Delete', service_request, confirm: 'Are you sure?', method: :delete %></td>
-        </tr>
-<% end %>
+	<% @service_requests.each do |service_request| %>
+	<tr>
+		<td><%= service_request.address %></td>
+		<td><%= truncate(service_request.title) %></td>
+		<td><%= truncate(service_request.description, length: 50) %></td>
+		<td>
+			<% if(service_request.status == 2) # if(archived) %>
+			<span class="label label-default">&nbsp;</span>
+			<% elsif (service_request.status == 3) # if(pending) %>
+			<span class="label label-yellow">&nbsp;</span>
+			<% else #if(open) %>
+			<span class="label label-success">&nbsp;</span>
+			<% end #ends if(statuses) %>
+		</td>
+		<td>
+			<% if(service_request.category.id == 1) %>
+			<span class="badge badge-dark">M</span>
+			<% elsif (service_request.category.id == 2)%>
+			<span class="badge badge-dark"> I </span>
+			<% else %>
+			<span class="badge badge-dark">G</span>
+			<% end %>
+		</td>
+		<td>
+			<% if(service_request.status != 2) #if(not archived) %>
+			<% if(service_request.alert_date < Date.today) %>
+			<span class="label label-danger"><i class="fa fa-exclamation"></i></span>
+			<% elsif (service_request.warning_date <= Date.today)%>
+			<span class="label label-warning"><i class="fa fa-exclamation"></i></span>
+			<% end %>
+			<% end %>
+		</td>
+		<td><%= link_to 'View', service_request %></td>
+		<td><%= link_to 'Edit', edit_service_request_path(service_request) %></td>
+		<td><%= link_to 'Delete', service_request, confirm: 'Are you sure?', method: :delete %></td>
+	</tr>
+	<% end %>
 </table>
 <script>
 $(function() {
@@ -1288,7 +1300,7 @@ $(function() {
 	"Convenience Store",
 	"Gym",
 	"Other"
-		];
+	];
 	$( "#search" ).autocomplete({
 		source: availableProperties
 	});
