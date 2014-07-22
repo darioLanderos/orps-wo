@@ -9,11 +9,19 @@
 
 <div class="tag-box tag-box-v3">
 	<div class="headline">
-		<h4>Work Order Details</h4>
+		<h4>General Details</h4>
 	</div>
 <div class="form-group">
 	<p class="lead"><b>
-		<%= @service_request.address %></b></p>
+		<%= @service_request.address %></b>&nbsp;&nbsp;
+		<% if(@service_request.status == 2) %>
+			<span class="label label-light"> Archived </span>
+		<% elsif (@service_request.status == 3)%>
+			<span class="label label-yellow"> Pending </span>
+		<% else %>
+			<span class="label label-dark"> Open </span>
+		<% end %>
+	</p>
 </div>
 <div class="form-group">
 	Title:
@@ -37,11 +45,11 @@
 	Status:
 	<p class="lead">
 		<% if(@service_request.status == 2) %>
-			<span class="label label-default">Archived</span>
+			<p class="lead">Archived</p>
 		<% elsif (@service_request.status == 3)%>
-			<span class="label label-danger">Pending</span>
+			<p class="lead">Pending</p>
 		<% else %>
-			<span class="label label-success">Open</span>
+			<p class="lead">Open</p>
 		<% end %>
 	</p>
 </div>
@@ -58,7 +66,14 @@
 <div class="form-group">
 	Caller Information:
 	<p class="lead">
-		<%= @service_request.caller_name %> - <%= @service_request.call_back_phone %>
+		<%= @service_request.caller_name %> - 
+		<%= link_to number_to_phone(@service_request.call_back_phone, area_code: true), "tel:#{@service_request.call_back_phone}" %>
+	</p>
+</div>
+<div class="form-group">
+	Due Date:
+	<p class="lead">
+		<%= @service_request.alert_date.strftime("%b - %d - %Y") %>
 	</p>
 </div>
 <div class="form-group">
@@ -83,6 +98,4 @@
 		<%= @the_creator != nil ? @the_creator.email : "Unknown" %>
 	</p>
 </div>
-
-
 </div>

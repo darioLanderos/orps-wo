@@ -1,15 +1,24 @@
   <%= content_for(:title, "Work Orders") %>
-  
+
   <p class="text-right">
+    <span class="badge badge-dark">M</span><small> Maintenance &nbsp;</small>
+    <span class="badge badge-dark"> I </span><small> Irrigations &nbsp;</small>
+    <span class="badge badge-dark">G</span><small> Grounds &nbsp;</small>
+    <span class="label label-success">&nbsp;</span><small> Open &nbsp;</small>
+    <span class="label label-yellow">&nbsp;</span><small> Pending &nbsp;</small>
+    <span class="label label-warning">&nbsp;</span><small> Expiring &nbsp;</small>
+    <span class="label label-danger">&nbsp;</span><small> Expired &nbsp;</small>
+    |&nbsp;
   	<%= link_to 'New work order', new_service_request_path %>
   </p>
       <table class="table table-striped table-hover">
         <tr>
-          <th></th>
           <th class="span2">Address</th>
           <th class="span2">Title</th>
           <th class="span6">Description</th>
           <th>Status</th>
+          <th>Category</th>
+          <th></th>
           <th></th>
           <th></th>
           <th></th>
@@ -17,31 +26,32 @@
 
         <% @service_requests.each do |service_request| %>
         <tr>
-          <td>
-            <% if(service_request.category.id == 1) %>
-            <span class="badge badge-dark">M</span>
-            <% elsif (service_request.category.id == 2)%>
-            <span class="badge badge-dark">I</span>
-            <% else %>
-            <span class="badge badge-dark">G</span>
-            <% end %>
-          </td>
           <td><%= service_request.address %></td>
           <td><%= truncate(service_request.title) %></td>
           <td><%= truncate(service_request.description, length: 50) %></td>
           <td>
-            <% if(service_request.status == 2) %>
-            <span class="label label-light">Archived</span>
-            <% elsif (service_request.status == 3)%>
-            <span class="label label-yellow">Pending</span>
+            <% if(service_request.status == 2) # if(archived) %>
+            <span class="label label-light">&nbsp;</span>
+            <% elsif (service_request.status == 3) # if(pending) %>
+            <span class="label label-yellow">&nbsp;</span>
+            <% else #if(open) %>
+            <span class="label label-success">&nbsp;</span>
+            <% end #ends if(statuses) %>
+          </td>
+          <td>
+            <% if(service_request.category.id == 1) %>
+            <span class="badge badge-dark">M</span>
+            <% elsif (service_request.category.id == 2)%>
+            <span class="badge badge-dark"> I </span>
             <% else %>
-            
+            <span class="badge badge-dark">G</span>
             <% end %>
-
+          </td>
+          <td>
             <% if(service_request.alert_date < Date.today) %>
-            <span class="label label-danger">Expired</span>
+              <span class="label label-danger">&nbsp;</span>
             <% elsif (service_request.warning_date <= Date.today)%>
-            <span class="label label-warning">Expiring</span>
+              <span class="label label-warning">&nbsp;</span>
             <% end %>
           </td>
           <td><%= link_to 'View', service_request %></td>
