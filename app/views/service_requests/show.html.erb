@@ -28,15 +28,37 @@
 	</p>
 </div>
 <div class="form-group">
+	Category:
+	<p class="lead">
+		<%= @service_request.category.name %>
+	</p>
+</div>
+<div class="form-group">
 	Status:
 	<p class="lead">
 		<% if(@service_request.status == 2) %>
-			<span class="label label-default">Close</span>
+			<span class="label label-default">Archived</span>
 		<% elsif (@service_request.status == 3)%>
-			<span class="label label-danger">Block</span>
+			<span class="label label-danger">Pending</span>
 		<% else %>
 			<span class="label label-success">Open</span>
 		<% end %>
+	</p>
+</div>
+<div class="form-group">
+	Work performed:
+	<p class="lead">
+		<% if !(@service_request.work_performed.blank?) %>
+			<%= @service_request.work_performed %>
+		<% else %>
+			Ooooops..... No work perfomed yet
+		<% end %>
+	</p>
+</div>
+<div class="form-group">
+	Caller Information:
+	<p class="lead">
+		<%= @service_request.caller_name %> - <%= @service_request.call_back_phone %>
 	</p>
 </div>
 <div class="form-group">
