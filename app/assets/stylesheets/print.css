@@ -1,14 +1,8 @@
 .noprint, .topbar, .breadcrumbs, .footer {display: none;}
-
 img {max-width: 500px;}
 video {display:none;}
 audio {display:none;}
 object {display:none;}
 embeded {display:none;}
-
-body {
-font: 12pt Georgia, "Times New Roman", Times, serif;
-line-height: 1.3;
-}
-
+body { font: 12pt Georgia, "Times New Roman", Times, serif; line-height: 1.3;}
 ul {list-style: none}
