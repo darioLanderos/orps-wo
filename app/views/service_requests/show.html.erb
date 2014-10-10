@@ -16,7 +16,7 @@
 	<p class="lead"><b>
 		<%= @service_request.address %></b>&nbsp;&nbsp;
 		<% if(@service_request.status == 2) %>
-			<span class="label label-light"> Archived </span>
+			<span class="label label-light"> Closed </span>
 		<% elsif (@service_request.status == 3)%>
 			<span class="label label-yellow"> Pending </span>
 		<% else %>
@@ -46,7 +46,7 @@
 	Status:
 	<p class="lead">
 		<% if(@service_request.status == 2) %>
-			<p class="lead">Archived</p>
+			<p class="lead">Closed</p>
 		<% elsif (@service_request.status == 3)%>
 			<p class="lead">Pending</p>
 		<% else %>
