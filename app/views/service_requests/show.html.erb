@@ -2,7 +2,7 @@
 
 <%= content_for(:title, "Work Order Details") %>
 
-<p class="text-right">
+<p class="text-right noprint">
 	<%= link_to 'Edit', edit_service_request_path(@service_request) %> |
 	<%= link_to 'Back', service_requests_path %>
 </p>
@@ -10,6 +10,7 @@
 <div class="tag-box tag-box-v3">
 	<div class="headline">
 		<h4>General Details</h4>
+		<a href="javascript:window.print();" ><span class="label label-blue pull-right"> <i class="fa fa-print"></i> Print </span></a>
 	</div>
 <div class="form-group">
 	<p class="lead"><b>
@@ -54,16 +55,6 @@
 	</p>
 </div>
 <div class="form-group">
-	Work performed:
-	<p class="lead">
-		<% if !(@service_request.work_performed.blank?) %>
-			<%= @service_request.work_performed %>
-		<% else %>
-			Ooooops..... No work perfomed yet
-		<% end %>
-	</p>
-</div>
-<div class="form-group">
 	Caller Information:
 	<p class="lead">
 		<%= @service_request.caller_name %> - 
@@ -82,8 +73,6 @@
 		<%= @service_request.created_at.strftime("%b %d %Y") %> at <%= @service_request.created_at.strftime("%H:%M") %> - <%= distance_of_time_in_words(@service_request.created_at, Time.now) %> ago
 	</p>
 </div>
-
-
 <% if(@service_request.updated_at != @service_request.created_at) %>
 <div class="form-group">
 	Last modified on:
@@ -96,6 +85,16 @@
 	Created by:
 	<p class="lead">
 		<%= @the_creator != nil ? @the_creator.email : "Unknown" %>
+	</p>
+</div>
+<div class="form-group">
+	Work performed:
+	<p class="lead">
+		<% if !(@service_request.work_performed.blank?) %>
+			<%= @service_request.work_performed %>
+		<% else %>
+			"No work performed yet"
+		<% end %>
 	</p>
 </div>
 </div>
