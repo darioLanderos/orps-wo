@@ -70,14 +70,14 @@
 <div class="form-group">
 	Created on:
 	<p class="lead">
-		<%= @service_request.created_at.strftime("%b %d %Y") %> at <%= @service_request.created_at.strftime("%H:%M") %> - <%= distance_of_time_in_words(@service_request.created_at, Time.now) %> ago
+		<%= @service_request.created_at.strftime("%b %d %Y") %> at <%= @service_request.created_at.strftime("%I:%M %p") %> - <%= distance_of_time_in_words(@service_request.created_at, Time.now) %> ago
 	</p>
 </div>
 <% if(@service_request.updated_at != @service_request.created_at) %>
 <div class="form-group">
 	Last modified on:
 	<p class="lead">
-		<%= @service_request.updated_at.strftime("%b %d %Y") %> at <%= @service_request.updated_at.strftime("%H:%M") %> - <%= distance_of_time_in_words(@service_request.updated_at, Time.now) %> ago
+		<%= @service_request.updated_at.strftime("%b %d %Y") %> at <%= @service_request.updated_at.strftime("%I:%M %p") %> - <%= distance_of_time_in_words(@service_request.updated_at, Time.now) %> ago
 	</p>
 </div>
 <% end %>
