@@ -19,7 +19,7 @@
 	<div class="headline">
 		<h4>Work Order Details</h4>
 	</div>
-	<p class="text-muted text-center">Please provide us with as much information you have so we can contact the right person.</p>
+	<p class="text-muted text-center noprint">Please provide us with as much information you have so we can contact the right person.</p>
 	<div class="form-group">
 		<%= f.label :address, :class => "control-label" %> :<br />
 		<%= f.text_field :address, :class => 'form-control input-lg', :placeholder => 'Ex. 1 main drive' %>
@@ -30,23 +30,13 @@
 	</div>
 	<div class="form-group">
 		<%= f.label :description, :class => "control-label" %> :<br />
-		<%= f.text_area :description, :class => 'form-control input-lg', :rows => '4' %>
+		<%= f.text_area :description, :class => 'form-control input-lg', :rows => '3' %>
 	</div>
 	<div class="form-group">
 		<%= f.label :category, :class => "control-label" %> :<br />
 		<%= f.select( :category_id, options_from_collection_for_select(@categories, :id, :name, :selected => @service_request.category.id), {}, {:class => 'form-control input-lg'})%>
 		
 	</div>
-	<% if(!@service_request.new_record?) %>
-	<div class="form-group">
-		<%= f.label :status, :class => "control-label" %> :<br />
-		<%= f.select( :status, options_for_select([["Open", "1"], ["Closed", "2"], ["Pending", "3"]], :selected => @service_request.status), {}, { :class => "form-control  input-lg"} )%>
-	</div>
-	<div class="form-group">
-		<%= f.label :work_performed, :class => "control-label" %> :<br />
-		<%= f.text_area :work_performed, :class => 'form-control input-lg', :rows => '4' %>
-	</div>
-	<% end %>
 	<div class="form-group">
 		<%= f.label :caller_name, :class => "control-label" %> :<br />
 		<%= f.text_field :caller_name, :class => 'form-control input-lg', :placeholder => 'Ex. Bog Bogus' %>
@@ -55,9 +45,19 @@
 		<%= f.label :call_back_phone, :class => "control-label" %> :<br />
 		<%= f.text_field :call_back_phone, :class => 'form-control input-lg', :placeholder => 'Ex. (555) 987-4321' %>
 	</div>
+	<% if(!@service_request.new_record?) %>
+	<div class="form-group">
+		<%= f.label :status, :class => "control-label" %> :<br />
+		<%= f.select( :status, options_for_select([["Open", "1"], ["Closed", "2"], ["Pending", "3"]], :selected => @service_request.status), {}, { :class => "form-control  input-lg"} )%>
+	</div>
+	<div class="form-group">
+		<%= f.label :work_performed, :class => "control-label" %> :<br />
+		<%= f.text_area :work_performed, :class => 'form-control input-lg', :rows => '3' %>
+	</div>
+	<% end %>
 </div>
 
-<div class="tag-box tag-box-v3">
+<div class="tag-box tag-box-v3 noprint">
 	<div class="headline">
 		<h4>Advanced settings</h4>
 	</div>
