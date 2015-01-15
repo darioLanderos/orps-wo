@@ -15,9 +15,10 @@
 development:
   adapter: postgresql
   encoding: unicode
+  host: localhost
   database: cmms_development
   pool: 5
-  username: darioLanderos
+  username: dariolanderos
   password:
 
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -43,7 +44,7 @@ test:
   encoding: unicode
   database: cmms_test
   pool: 5
-  username: darioLanderos
+  username: dariolanderos
   password:
 
 production:
@@ -51,5 +52,5 @@ production:
   encoding: unicode
   database: cmms_production
   pool: 5
-  username: darioLanderos
+  username: dariolanderos
   password:

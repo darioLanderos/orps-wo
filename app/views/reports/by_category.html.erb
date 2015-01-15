@@ -1,20 +1,32 @@
 <%= content_for(:title, "Work Orders by Category") %>
 
-<p><span class="help-block">Select the desired category to filter then hit the "Search" button.</span></p>
-<br/>
+<% content_for :header do %>
+		<%= stylesheet_link_tag "jquery-ui", :media => "all" %>
+	<%= stylesheet_link_tag "datepicker", :media => "all" %>
+<% end %>
 
 <%= form_tag '/reports/by_category', :method => 'get', :class => 'form-inline' do %>
+
 	<div class="form-group">
-		<input type="search" id="search_by_id" value="" class="form-control input-lg" placeholder="Work Order by ID">
+		<input type="search" id="search_by_id" value="" class="form-control input-lg" placeholder="Filter Criteria">
+		<%= text_field_tag :start_date, params[:start_date], :class => 'form-control input-lg datepicker', :placeholder => 'Start Date' %>
+		<%= text_field_tag :finish_date, params[:finish_date], :class => 'form-control input-lg datepicker', :placeholder => 'Finish Date'%>
 		<%= select_tag( :search, options_for_select([["All", "0"], ["Maintenance", "1"], ["Irrigation", "2"], ["Grounds", "3"]], params[:search]), :class => "form-control input-lg" )%>
 	</div>
-		<%= submit_tag "Search", :name => nil, :class => 'btn btn-default btn-lg' %>
+	<%= submit_tag "Search", :name => nil, :class => 'btn btn-default btn-lg' %>
 <% end %>
 
 <%= render "work_orders_list" %>
 
 <script>
 $(function() {
+	$( "#start_date" ).datepicker({
+	  dateFormat: "yy-mm-dd"
+	});
+	$( "#finish_date" ).datepicker({
+	  dateFormat: "yy-mm-dd"
+	});
+	
 	var availableProperties = [ 
 	"Lot 001", 
 	"Lot 002", 

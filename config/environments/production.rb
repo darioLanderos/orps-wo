@@ -1,6 +1,26 @@
 Cmms::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
+  #Set up the development mailer
+  config.action_mailer.default_url_options = { :host => 'orps-cmms.herokuapp.com' }
+  
+  #Turn on the option to raise an exception if there is an error when sending an email
+  config.action_mailer.raise_delivery_errors = true
+
+  #Set up mailer method
+  config.action_mailer.delivery_method = :smtp
+  
+  #Set up SMTP settings
+  config.action_mailer.smtp_settings = {
+    :address => 'smtp.gmail.com',
+    :port => 587,
+    :domain => 'gmail.com',
+    :authentication => 'plain',
+    :enable_starttls_auto => true,
+    :user_name => 'dario@ias1.com',
+    :password => 'HiDario2013#'
+  }
+  
   # Code is not reloaded between requests
   config.cache_classes = true
 
@@ -64,4 +84,5 @@ Cmms::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
+  
 end
