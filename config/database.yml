@@ -52,5 +52,5 @@ production:
   encoding: unicode
   database: cmms_production
   pool: 5
-  username: dariolanderos
+  username: darioLanderos
   password:
