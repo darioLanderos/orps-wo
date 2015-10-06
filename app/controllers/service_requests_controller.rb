@@ -5,7 +5,7 @@ class ServiceRequestsController < ApplicationController
   # GET /service_requests
   # GET /service_requests.json
   def index
-    @service_requests = ServiceRequest.order('updated_at DESC').where('status != ?', '2') #status == 2 means "archived"
+    @service_requests = ServiceRequest.where("status != ?", 2).order("updated_at DESC").paginate(:page => params[:page], :per_page => 12) #ServiceRequest.order('updated_at DESC').where('status != ?', '2') #status == 2 means "archived"
 
     respond_to do |format|
       format.html # index.html.erb
