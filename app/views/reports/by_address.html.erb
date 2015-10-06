@@ -1,15 +1,17 @@
 <%= content_for(:title, "Work Orders by Address") %>
 
-<p><span class="help-block">Look for the desired property then hit the "Search" button, if you need to show all the results just clear the textbox and hit the button again.</span></p>
-<br/>
-
-<%= form_tag reports_path, :method => 'get', :class => 'form-inline' do %>
-<div class="form-group">
-	<input type="search" id="search_by_id" value="" class="form-control input-lg" placeholder="Work Order by ID">
-	<%= text_field_tag :search, params[:search], :class => 'form-control input-lg', :placeholder => 'Ex. 1 Main Drive' %>
-</div>
-<%= submit_tag "Search", :name => nil, :class => 'btn btn-default btn-lg' %>
+<% if (params[:show_closed] && params[:show_closed] = true) %>
+	<p><span class="help-block">Just start typing any filter like "<b>Maintenance</b>", "<b>Grounds</b>", "<b>Irrigations</b>", "<b>ID</b>", etc.... The data will filter automatically</span></p>
+	<br/>
+	<%= link_to "Hide closed items", reports_path, :class => "pull-right" %>
+<% else %>
+	<p><span class="help-block">Just start typing any filter like "<b>Open</b>", "<b>Pending</b>", "<b>Expiring</b>", "<b>Expired</b>", "<b>Maintenance</b>", "<b>Grounds</b>", etc.... The data will filter automatically</span></p>
+	<br/>
+	<%= link_to "View closed items only", "/reports?show_closed=true", :class => "pull-right"%>
 <% end %>
+<div class="form-group">
+	<input type="search" id="search_by_id" value="" class="form-control input-lg" placeholder="Type any filter here...">
+</div>
 
 <%= render "work_orders_list" %>
 
