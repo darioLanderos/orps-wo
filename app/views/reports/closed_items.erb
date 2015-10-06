@@ -1,15 +1,17 @@
 <%= content_for(:title, "Work Orders by Address") %>
 
-<p><span class="help-block">Just start typing any filter like "<b>Open</b>", "<b>Pending</b>", "<b>Expiring</b>", "<b>Expired</b>", "<b>Maintenance</b>", "<b>Grounds</b>", etc.... The data will filter automatically</span></p>
+<p><span class="help-block">Unfortunately search functionality is <b>not ready</b> for closed items.</span></p>
 <br/>
 
-<%= link_to "View closed items only", "/reports/closed_items", :class => "pull-right"%>
+<%= link_to "Hide closed items", reports_path, :class => "pull-right" %>
 
 <div class="form-group">
-	<input type="search" id="search_by_id" value="" class="form-control input-lg" placeholder="Type any filter here...">
+	<input type="search" id="search_by_id" disabled="disabled" value="" class="form-control input-lg" placeholder="Type any filter here...">
 </div>
 
 <%= render "work_orders_list" %>
+<div class="row text-center"><%= will_paginate @service_requests %></div>
+
 
 <script>
 $(function() {

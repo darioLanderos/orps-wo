@@ -25,7 +25,7 @@
 		<th></th>
 	</tr>
 </thead>
-<% @service_requests.find_each(batch_size: 500)  do |service_request| %>
+<% @service_requests.each do |service_request| %>
 <tbody>
 	<tr>
 		<td># <%= service_request.id %></td>

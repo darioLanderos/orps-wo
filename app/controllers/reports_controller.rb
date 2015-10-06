@@ -3,13 +3,22 @@ class ReportsController < ApplicationController
   before_filter :authenticate_user!
   
   def by_address
-    if params[:show_closed]
-      @service_requests = ServiceRequest.where("status" => 2) #ServiceRequest.where("address LIKE ?", "%#{params[:search]}%") 
+    #if params[:show_closed]
+     # @service_requests = ServiceRequest.where("status" => 2).paginate(:page => params[:page], :per_page => 75) #ServiceRequest.where("address LIKE ?", "%#{params[:search]}%") 
       #ServiceRequest.find(:all, :conditions => ['address LIKE ?', "%#{params[:search]}%"])
-    else
+    #else
       @service_requests = ServiceRequest.where("status != ?", 2) #ServiceRequest.all
-    end
+    #end
 
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @service_requests }
+    end
+  end
+  
+  def closed_items
+    @service_requests = ServiceRequest.where("status" => 2).paginate(:page => params[:page], :per_page => 100)
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @service_requests }
