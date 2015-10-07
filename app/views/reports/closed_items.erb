@@ -1,16 +1,20 @@
 <%= content_for(:title, "Work Orders by Address") %>
 
-<p><span class="help-block">Unfortunately search functionality is <b>not ready</b> for closed items.</span></p>
+<p><span class="help-block">Search functionality is <b>ONLY</b> working with the address field for closed items.</span></p>
 <br/>
 
 <%= link_to "Hide closed items", reports_path, :class => "pull-right" %>
 
 <div class="form-group">
-	<input type="search" id="search_by_id" disabled="disabled" value="" class="form-control input-lg" placeholder="Type any filter here...">
+	<%= form_tag "/reports/closed_items", :method => 'get' do %>
+	  <%= content_tag :div, :class => "form-group" do %>
+	    <%= text_field_tag :search, params[:search], :class => "form-control input-lg", :placeholder => "Type the address here and hit Enter " %>
+	  <% end %>
+	<% end %>
 </div>
 
 <%= render "work_orders_list" %>
-<div class="row text-center"><%= will_paginate @service_requests %></div>
+<div class="row text-center"><%= will_paginate @service_requests, previous_label: h("<"), next_label: h(">") %></div>
 
 
 <script>

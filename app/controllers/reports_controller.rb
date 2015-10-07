@@ -17,7 +17,17 @@ class ReportsController < ApplicationController
   end
   
   def closed_items
-    @service_requests = ServiceRequest.where("status" => 2).paginate(:page => params[:page], :per_page => 100)
+    if params[:search] && params[:page]
+      @service_requests = ServiceRequest.search(params[:search], params[:page], 75, "ID")
+    elsif !params[:search]
+      @service_requests = ServiceRequest.search("", params[:page], 75, "ID")
+    elsif !params[:page]
+      @service_requests = ServiceRequest.search(params[:search], 1, 75, "ID")
+     # @service_requests = ServiceRequest.where("status" => 2).page(params[:page]).per_page(5).search(params[:search])
+    else
+      @service_requests = ServiceRequest.search("", 1, 75, "ID")
+     # @service_requests = ServiceRequest.where("status" => 2).page(params[:page]).per_page(5)
+    end 
     
     respond_to do |format|
       format.html # index.html.erb

@@ -60,4 +60,4 @@
         </tr>
         <% end %>
       </table>
-      <div class="row text-center"><%= will_paginate @service_requests %></div>
+      <div class="row text-center"><%= will_paginate @service_requests, previous_label: h("<"), next_label: h(">") %></div>
