@@ -13,6 +13,10 @@ Cmms::Application.routes.draw do
   
   match 'reports/closed_items'
   
+  match 'reports/closed_items_by_category'
+  
+  match 'reports/closed_items_by_status'
+  
   match 'reports', to: 'reports#by_address'
   
   match 'contact', to: 'contact#index'

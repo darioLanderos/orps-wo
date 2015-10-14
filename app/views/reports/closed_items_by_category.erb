@@ -1,0 +1,40 @@
+<%= content_for(:title, "Closed Work Orders by Address") %>
+
+<p><span class="help-block">Search functionality is <b>ONLY</b> working with the address field for closed items.</span></p>
+<br/>
+
+<%= link_to "Hide closed items", reports_path, :class => "pull-right" %>
+
+<div class="form-group">
+	<%= form_tag "/reports/closed_items_by_category", :method => 'get' do %>
+	  <%= content_tag :div, :class => "form-group" do %>
+	    <%= text_field_tag :search, params[:search], :class => "form-control input-lg", :placeholder => "Type the category here and hit Enter " %>
+	  <% end %>
+	<% end %>
+</div>
+
+<%= render "work_orders_list" %>
+<div class="row text-center"><%= will_paginate @service_requests, previous_label: h("<"), next_label: h(">") %></div>
+
+
+<script>
+$(function() {
+	var availableOptions = [ 
+	{value: "1", label:"Maintenance"}, 
+	{value: "2", label:"Irrigations"}, 
+	{value: "3", label:"Grounds"}
+	];
+	$( "#search" ).autocomplete({
+		source: availableOptions,
+		focus: function( event, ui ) {
+        $( "#search" ).val( ui.item.label );
+            return false;
+        },
+        select: function( event, ui ) {
+        $( "#search" ).val( ui.item.label );
+ 
+        return false;
+      }
+	});
+});
+</script>

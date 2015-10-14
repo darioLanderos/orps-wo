@@ -1,34 +1,9 @@
 class ReportsController < ApplicationController
-  
   before_filter :authenticate_user!
   
   def by_address
-    #if params[:show_closed]
-     # @service_requests = ServiceRequest.where("status" => 2).paginate(:page => params[:page], :per_page => 75) #ServiceRequest.where("address LIKE ?", "%#{params[:search]}%") 
-      #ServiceRequest.find(:all, :conditions => ['address LIKE ?', "%#{params[:search]}%"])
-    #else
-      @service_requests = ServiceRequest.where("status != ?", 2) #ServiceRequest.all
-    #end
+    @service_requests = ServiceRequest.where("status != ?", 2) 
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @service_requests }
-    end
-  end
-  
-  def closed_items
-    if params[:search] && params[:page]
-      @service_requests = ServiceRequest.where("status" => 2).search(params[:search], params[:page], 75, "ID")
-    elsif !params[:search]
-      @service_requests = ServiceRequest.where("status" => 2).search("", params[:page], 75, "ID")
-    elsif !params[:page]
-      @service_requests = ServiceRequest.where("status" => 2).search(params[:search], 1, 75, "ID")
-     # @service_requests = ServiceRequest.where("status" => 2).page(params[:page]).per_page(5).search(params[:search])
-    else
-      @service_requests = ServiceRequest.where("status" => 2).search("", 1, 75, "ID")
-     # @service_requests = ServiceRequest.where("status" => 2).page(params[:page]).per_page(5)
-    end 
-    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @service_requests }
@@ -36,14 +11,7 @@ class ReportsController < ApplicationController
   end
 
   def by_status
-    if ((params[:search]) && (params[:search] != "0"))
-      @service_requests = ServiceRequest.where("status = ?", "#{params[:search]}") 
-      #ServiceRequest.find(:all, :conditions => ['status = ?', "#{params[:search]}"])
-      @received_params = params[:search]
-    else
-      @service_requests = ServiceRequest.where("status = ?", 1) #ServiceRequest.all
-      @received_params = "Nothing received"
-    end
+    @service_requests = ServiceRequest.where("status != ?", 2)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -52,24 +20,59 @@ class ReportsController < ApplicationController
   end
 
   def by_category
+    @service_requests = ServiceRequest.where("status != ?", 2)
     
-    if((params[:start_date]) && (params[:finish_date]))
-      if ((params[:search])  && (params[:search] != "0"))
-        @service_requests = ServiceRequest.where("category_id = ? AND created_at between ? and ?", "#{params[:search]}","#{params[:start_date]}" ,"#{params[:finish_date]}") 
-        #ServiceRequest.find(:all, :conditions => ['category_id = ? AND created_at between ? and ?', "#{params[:search]}","#{params[:start_date]}" ,"#{params[:finish_date]}"])
-        @received_params = params[:search]
-      else
-        @service_requests = ServiceRequest.where("created_at BETWEEN ? AND ?", "#{params[:start_date]}", "#{params[:finish_date]}")
-        # ServiceRequest.find(:all, :conditions => ['created_at between ? and ?', "#{params[:start_date]}" ,"#{params[:finish_date]}"])
-        @received_params = "Nothing received"
-      end
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @service_requests }
+    end
+  end
+  
+  def closed_items
+    if params[:search] && params[:page]
+      @service_requests = ServiceRequest.where("status" => 2).search_by_address(params[:search], params[:page], 75, "ID")
+    elsif !params[:search]
+      @service_requests = ServiceRequest.where("status" => 2).search_by_address("", params[:page], 75, "ID")
+    elsif !params[:page]
+      @service_requests = ServiceRequest.where("status" => 2).search_by_address(params[:search], 1, 75, "ID")
     else
-      @service_requests = ServiceRequest.where("status = ?", 1) #ServiceRequest.all
-      @received_params = "Nothing received"
+      @service_requests = ServiceRequest.where("status" => 2).search_by_address("", 1, 75, "ID")
+    end 
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @service_requests }
+    end
+  end
+  
+  def closed_items_by_category
+    if params[:search] && params[:page]
+      @service_requests = ServiceRequest.where("status" => 2).search_by_category(params[:search], params[:page], 75, "ID")
+    elsif !params[:search]
+      @service_requests = ServiceRequest.where("status" => 2).search_by_category("", params[:page], 75, "ID")
+    elsif !params[:page]
+      @service_requests = ServiceRequest.where("status" => 2).search_by_category(params[:search], 1, 75, "ID")
+    else
+      @service_requests = ServiceRequest.where("status" => 2).search_by_category("", 1, 75, "ID")
     end
     
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @service_requests }
+    end
+  end
+  
+  def closed_items_by_status
+    if params[:search] && params[:page]
+      @service_requests = ServiceRequest.where("status" => 2).search_by_status(params[:search], params[:page], 75, "ID")
+    elsif !params[:search]
+      @service_requests = ServiceRequest.where("status" => 2).search_by_status("", params[:page], 75, "ID")
+    elsif !params[:page]
+      @service_requests = ServiceRequest.where("status" => 2).search_by_status(params[:search], 1, 75, "ID")
+    else
+      @service_requests = ServiceRequest.where("status" => 2).search_by_status("", 1, 75, "ID")
+    end
     
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @service_requests }

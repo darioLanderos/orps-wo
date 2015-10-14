@@ -6,9 +6,9 @@
 <%= link_to "Hide closed items", reports_path, :class => "pull-right" %>
 
 <div class="form-group">
-	<%= form_tag "/reports/closed_items", :method => 'get' do %>
+	<%= form_tag "/reports/closed_items_by_status", :method => 'get' do %>
 	  <%= content_tag :div, :class => "form-group" do %>
-	    <%= text_field_tag :search, params[:search], :class => "form-control input-lg", :placeholder => "Type the address here and hit Enter " %>
+	    <%= text_field_tag :search, params[:search], :class => "form-control input-lg", :placeholder => "Type the status here and hit Enter " %>
 	  <% end %>
 	<% end %>
 </div>

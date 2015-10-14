@@ -1,15 +1,13 @@
 <%= content_for(:title, "Work Orders by Status") %>
 
-<p><span class="help-block">Select the desired status to filter then hit the "Search" button.</span></p>
+<p><span class="help-block">Just start typing any filter like "<b>Open</b>", "<b>Pending</b>", "<b>Expiring</b>", "<b>Expired</b>", "<b>Maintenance</b>", "<b>Grounds</b>", etc.... The data will filter automatically</span></p>
 <br/>
 
-<%= form_tag '/reports/by_status', :method => 'get', :class => 'form-inline' do %>
+<% link_to "View closed items only", "/reports/closed_items_by_status", :class => "pull-right"%>
+
 <div class="form-group">
-	<input type="search" id="search_by_id" value="" class="form-control input-lg" placeholder="Work Order by ID">
-	<%= select_tag( :search, options_for_select([["All", "0"], ["Open", "1"], ["Archived", "2"], ["Pending", "3"]], params[:search]), :class => "form-control  input-lg" )%>
+	<input type="search" id="search_by_id" value="" class="form-control input-lg" placeholder="Type any filter here...">
 </div>
-<%= submit_tag "Search", :name => nil, :class => 'btn btn-default btn-lg' %>
-<% end %>
 
 <%= render "work_orders_list" %>
 
