@@ -1,4 +1,7 @@
 class CategoriesController < ApplicationController
+  load_and_authorize_resource
+  before_filter :authenticate_user!
+
   # GET /categories
   # GET /categories.json
   def index
@@ -13,7 +16,7 @@ class CategoriesController < ApplicationController
   # GET /categories/1
   # GET /categories/1.json
   def show
-    @category = Category.find(params[:id])
+    #@category = Category.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -34,13 +37,13 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1/edit
   def edit
-    @category = Category.find(params[:id])
+    #@category = Category.find(params[:id])
   end
 
   # POST /categories
   # POST /categories.json
   def create
-    @category = Category.new(params[:category])
+    @category = Category.new(category_params)
 
     respond_to do |format|
       if @category.save
@@ -56,10 +59,10 @@ class CategoriesController < ApplicationController
   # PUT /categories/1
   # PUT /categories/1.json
   def update
-    @category = Category.find(params[:id])
+    #@category = Category.find(params[:id])
 
     respond_to do |format|
-      if @category.update_attributes(params[:category])
+      if @category.update_attributes(category_params)
         format.html { redirect_to @category, notice: 'Category was successfully updated.' }
         format.json { head :no_content }
       else
@@ -72,7 +75,7 @@ class CategoriesController < ApplicationController
   # DELETE /categories/1
   # DELETE /categories/1.json
   def destroy
-    @category = Category.find(params[:id])
+    #@category = Category.find(params[:id])
     @category.destroy
 
     respond_to do |format|
@@ -80,4 +83,15 @@ class CategoriesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_category
+      @category = Category.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def category_params
+      params.require(:category).permit(:name)
+    end
 end

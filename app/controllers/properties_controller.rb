@@ -1,4 +1,7 @@
 class PropertiesController < ApplicationController
+  load_and_authorize_resource
+  before_filter :authenticate_user!
+  
   # GET /properties
   # GET /properties.json
   def index
@@ -13,7 +16,7 @@ class PropertiesController < ApplicationController
   # GET /properties/1
   # GET /properties/1.json
   def show
-    @property = Property.find(params[:id])
+    #@property = Property.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -34,13 +37,13 @@ class PropertiesController < ApplicationController
 
   # GET /properties/1/edit
   def edit
-    @property = Property.find(params[:id])
+    #@property = Property.find(params[:id])
   end
 
   # POST /properties
   # POST /properties.json
   def create
-    @property = Property.new(params[:property])
+    @property = Property.new(property_params)
 
     respond_to do |format|
       if @property.save
@@ -56,10 +59,10 @@ class PropertiesController < ApplicationController
   # PUT /properties/1
   # PUT /properties/1.json
   def update
-    @property = Property.find(params[:id])
+    #@property = Property.find(params[:id])
 
     respond_to do |format|
-      if @property.update_attributes(params[:property])
+      if @property.update_attributes(property_params)
         format.html { redirect_to @property, notice: 'Property was successfully updated.' }
         format.json { head :no_content }
       else
@@ -72,7 +75,7 @@ class PropertiesController < ApplicationController
   # DELETE /properties/1
   # DELETE /properties/1.json
   def destroy
-    @property = Property.find(params[:id])
+    #@property = Property.find(params[:id])
     @property.destroy
 
     respond_to do |format|
@@ -80,4 +83,15 @@ class PropertiesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_property
+      @property = Property.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def property_params
+      params.require(:property).permit(:city, :number, :state, :street, :zip)
+    end
 end

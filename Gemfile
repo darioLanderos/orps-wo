@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.3'
+#gem 'rails', '3.2.3' -- UPDATED ON 10/18/2015
+gem 'rails',        '4.2.2'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -8,6 +9,7 @@ gem 'rails', '3.2.3'
 gem 'pg'
 gem 'devise'
 gem 'will_paginate', '~> 3.0.6'
+gem 'cancancan', '~> 1.10'
 
 # BootStrap.
 # gem "therubyracer"
@@ -17,8 +19,13 @@ gem 'will_paginate', '~> 3.0.6'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+  
+  #gem 'sass-rails',   '~> 3.2.3' -- UPDATED ON 10/18/2015
+  gem 'sass-rails',   '5.0.2'
+  
+  #gem 'coffee-rails', '~> 3.2.1' -- UPDATED ON 10/18/2015
+  gem 'coffee-rails', '4.1.0'
+  
   gem 'test-unit'
   
   # BootStrap
@@ -29,10 +36,33 @@ group :assets do
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platform => :ruby
 
-  gem 'uglifier', '>= 1.0.3'
+  #gem 'uglifier', '>= 1.0.3' -- UPDATED ON 10/18/2015
+  gem 'uglifier',     '2.5.3'
 end
 
+#gem 'jquery-rails' -- UPDATED ON 10/18/2015
 gem 'jquery-rails'
+
+#***********************************************************
+# GEMS ADDED ON 10/18/2015 - START
+#***********************************************************
+gem 'turbolinks',   '2.3.0'
+gem 'jbuilder',     '2.2.3'
+
+group :development, :test do
+  #gem 'sqlite3',     '1.3.9'
+  gem 'byebug',      '3.4.0'
+  gem 'web-console', '2.0.0.beta3'
+  gem 'spring',      '1.1.3'
+end
+
+group :production do
+  
+  gem 'rails_12factor', '0.0.2'
+end
+#***********************************************************
+# GEMS ADDED ON 10/18/2015 - END
+#***********************************************************
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

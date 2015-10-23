@@ -19,7 +19,7 @@
     <td><%= facility.description %></td>
     <td><%= link_to 'View', facility %></td>
     <td><%= link_to 'Edit', edit_facility_path(facility) %></td>
-    <td><%= link_to 'Delete', facility, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= link_to 'Destroy', facility, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>

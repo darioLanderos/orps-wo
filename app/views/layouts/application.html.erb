@@ -65,21 +65,26 @@
 						<%= link_to image_tag("iaslogo.png", :style => 'margin-top:-34px; margin-left:-18px'), :root, :id => 'logo_container' %>
 					</div>
 					<!--=== End Navbar Header ===-->
-					
 					<!--=== Navbar Links ===-->
 					<div class="collapse navbar-collapse navbar-responsive-collapse">
 						<ul class="nav navbar-nav">
-							<li <%= controller_name == 'service_requests' ? "class='active'" : "" %> >
+							<li class="<%= (controller_name == 'service_requests') ? "active" : "" %>" >
 								<%= link_to "Home", :root %></li>
-							<li <%= controller_name == 'reports' ? "class='dropdown active'" : "class='dropdown'" %> >
-								<a href="#" class="dropdown-toggle">Reports</a>
-								<ul class="dropdown-menu">
-									<li><%= link_to "By Address", reports_path %></li>
-									<li><%= link_to "By Status", "/reports/by_status" %></li>
-									<li><%= link_to "By Category", "/reports/by_category" %></li>
-								</ul>
+							<% if user_signed_in? %>
+							<li class="<%= (controller_name == "reports") ? "dropdown active" : "dropdown" %>" >
+							  <a href="#" id="dLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							    Reports
+							  </a>
+							  <ul class="dropdown-menu" aria-labelledby="dLabel">
+							    <li><%= link_to "By Address", reports_path %></li>
+								<li><%= link_to "By Status", "/reports/by_status" %></li>
+								<li><%= link_to "By Category", "/reports/by_category" %></li>
+							  </ul>
 							</li>
-							<li <%= controller_name == 'contact' ? "class=active" : "" %>>
+							<li class="<%= (controller_name == 'control_panel') ? "active" : "" %>">
+								<% link_to "Control panel", control_panel_path %></li>
+							<% end %>
+							<li class="<%= (controller_name == 'contact') ? "active" : "" %>">
 								<%= link_to "Contact", contact_path %></li>
 						</ul>
 					</div>
@@ -97,6 +102,14 @@
 				</ul>
 			</div><!--/container-->
 		</div>
+		
+		<% flash.each do |type, message| %>
+		  <div class="alert <%= bootstrap_class_for(type) %> alert-dismissible fade in">
+		    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+		    <%= message %>
+		  </div>
+		<% end %>
+		
 		<!--=== End Title / Breadcrumbs ===-->		
 		<div class="container content">
 			<%= yield %>
@@ -125,10 +138,14 @@
 	<script type="text/javascript">
 	    $(document).ready(function() {
 	    	App.init();
-	      $(':checkbox').iphoneStyle({
+	      	$(':checkbox').iphoneStyle({
 			  checkedLabel: 'YES',
 			  uncheckedLabel: 'NO'
 			});
+			$(".alert-dismissible").fadeTo(2000, 500).slideUp(500, function(){
+			    $(".alert-dismissible").alert('close');
+			});
+			$('[data-toggle="tooltip"]').tooltip()
 	    });
 	</script>
 	<%= yield(:js_scripts) %>

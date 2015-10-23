@@ -4,20 +4,19 @@
     <span class="badge badge-dark">M</span><small> Maintenance &nbsp;</small>
     <span class="badge badge-dark"> I </span><small> Irrigations &nbsp;</small>
     <span class="badge badge-dark">G</span><small> Grounds &nbsp;</small>
-    <span class="label label-success">&nbsp;</span><small> Open &nbsp;</small>
-    <span class="label label-yellow">&nbsp;</span><small> Pending &nbsp;</small>
-    <span class="label label-warning"><i class="fa fa-exclamation"></i></span><small> Expiring &nbsp;</small>
-    <span class="label label-danger"><i class="fa fa-exclamation"></i></span><small> Expired &nbsp;</small>
+    <span class="badge badge-dark">C</span><small> Code Compliance &nbsp;</small>
+    
     |&nbsp;
   	<%= link_to 'New work order', new_service_request_path %>
   </p>
+  <small class="pull-right"> Showing a total of <%= @service_requests.length %> records </small>
       <table class="table table-striped table-hover">
         <tr>
           <th class="span2">Address</th>
           <th class="span2">Title</th>
           <th class="span6">Description</th>
-          <th>Status</th>
-          <th>Category</th>
+          <th></th>
+          <th></th>
           <th></th>
           <th></th>
           <th></th>
@@ -31,32 +30,34 @@
           <td><%= truncate(service_request.description, length: 50) %></td>
           <td>
             <% if(service_request.status == 2) # if(archived) %>
-            <span class="label label-light">&nbsp;</span>
+            <span class="label label-light" data-toggle="tooltip" data-placement="top" title="Closed">&nbsp;</span>
             <% elsif (service_request.status == 3) # if(pending) %>
-            <span class="label label-yellow">&nbsp;</span>
+            <span class="label label-yellow" data-toggle="tooltip" data-placement="top" title="Pending">&nbsp;</span>
             <% else #if(open) %>
-            <span class="label label-success">&nbsp;</span>
+            <span class="label label-success" data-toggle="tooltip" data-placement="top" title="Open">&nbsp;</span>
             <% end #ends if(statuses) %>
           </td>
           <td>
             <% if(service_request.category.id == 1) %>
-            <span class="badge badge-dark">M</span>
+            <span class="badge badge-dark" data-toggle="tooltip" data-placement="top" title="Maintenance">M</span>
             <% elsif (service_request.category.id == 2)%>
-            <span class="badge badge-dark"> I </span>
+            <span class="badge badge-dark" data-toggle="tooltip" data-placement="top" title="Irrigations"> I </span>
+            <% elsif (service_request.category.id == 3) %>
+            <span class="badge badge-dark" data-toggle="tooltip" data-placement="top" title="Grounds">G</span>
             <% else %>
-            <span class="badge badge-dark">G</span>
+            <span class="badge badge-dark" data-toggle="tooltip" data-placement="top" title="Code Compliance"> C </span>
             <% end %>
           </td>
           <td>
             <% if(service_request.alert_date < Date.today) #if(expired) %>
-              <span class="label label-danger"><i class="fa fa-exclamation"></i></span>
+              <span class="label label-danger"  data-toggle="tooltip" data-placement="top" title="Expired on: <%= service_request.alert_date %>"><i class="fa fa-exclamation"></i></span>
             <% elsif (service_request.warning_date <= Date.today) #if(expiring) %>
-              <span class="label label-warning"><i class="fa fa-exclamation"></i></span>
+              <span class="label label-warning" data-toggle="tooltip" data-placement="top" title="Expiring"><i class="fa fa-exclamation"></i></span>
             <% end %>
           </td>
           <td><%= link_to 'View', service_request %></td>
           <td><%= link_to 'Edit', edit_service_request_path(service_request) %></td>
-          <td><%= link_to 'Delete', service_request, confirm: 'Are you sure?', method: :delete %></td>
+          <td><%= link_to 'Destroy', service_request, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
         <% end %>
       </table>

@@ -1,25 +1,34 @@
 Cmms::Application.routes.draw do
+  get 'control_panel/index'
+
+  resources :roles
+
   resources :categories
 
   resources :facilities
 
   devise_for :users
+  scope "/admin" do
+    resources :users
+    
+    get 'control_panel', controller: 'control_panel', action: :index
+  end
   
-  match 'reports/by_address'
+  get 'reports/by_address', controller: 'reports', action: :by_address
 
-  match 'reports/by_status'
+  get 'reports/by_status', controller: 'reports', action: :by_status
 
-  match 'reports/by_category'
+  get 'reports/by_category', controller: 'reports', action: :by_category
   
-  match 'reports/closed_items'
+  get 'reports/closed_items', controller: 'reports', action: :closed_items
   
-  match 'reports/closed_items_by_category'
+  get 'reports/closed_items_by_category', controller: 'reports', action: :closed_items_by_category
   
-  match 'reports/closed_items_by_status'
+  get 'reports/closed_items_by_status', controller: 'reports', action: :closed_items_by_status
   
-  match 'reports', to: 'reports#by_address'
+  get 'reports', controller: 'reports', action: :by_address
   
-  match 'contact', to: 'contact#index'
+  get 'contact', controller: 'contact', action: :index
 
   resources :properties
   
@@ -74,7 +83,10 @@ Cmms::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-    root :to => 'ServiceRequests#index'
+  authenticated :user do
+    root :to => 'service_requests#index', as: :authenticated_root
+  end
+  root :to => 'service_requests#index'
 
   # See how all your routes lay out with "rake routes"
 

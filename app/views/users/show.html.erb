@@ -1,0 +1,40 @@
+<p>
+  <strong>Name:</strong>
+  <%= @user.first_name %>
+</p>
+<p>
+  <strong>Last Name:</strong>
+  <%= @user.last_name %>
+</p>
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+<p>
+  <strong>Role:</strong>
+  <%= @user.role.name %>
+</p>
+<p>
+  <strong>Joined on:</strong>
+  <%= @user.created_at.to_formatted_s(:short) %>
+</p>
+<p>
+  <strong>Last logged in on:</strong>
+  <% if @user.current_sign_in_at.blank? %>
+	  	Never logged in before
+	<% else %>
+		<%= @user.current_sign_in_at.to_formatted_s(:short) %>
+	<% end %>
+</p>
+<p>
+  <strong>No. times logged in:</strong>
+  <%= @user.sign_in_count %>
+</p>
+
+
+  <%= link_to 'Edit', edit_user_path(@user) %> |
+
+  <%= link_to 'Back', users_path %>
+
+
+
