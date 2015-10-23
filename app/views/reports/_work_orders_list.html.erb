@@ -40,19 +40,23 @@
 		</td>
 		<td>
 			<% if(service_request.category.id == 1) %>
-            <span class="badge badge-dark" data-toggle="tooltip" data-placement="top" title="Maintenance">M</span>
+				<hidden hidden>maintenance</hidden>
+            	<span class="badge badge-dark" data-toggle="tooltip" data-placement="top" title="Maintenance">M</span>
             <% elsif (service_request.category.id == 2)%>
-            <span class="badge badge-dark" data-toggle="tooltip" data-placement="top" title="Irrigations"> I </span>
+            	<hidden hidden>Irrigations</hidden>
+            	<span class="badge badge-dark" data-toggle="tooltip" data-placement="top" title="Irrigations"> I </span>
             <% elsif (service_request.category.id == 3) %>
-            <span class="badge badge-dark" data-toggle="tooltip" data-placement="top" title="Grounds">G</span>
+            	<hidden hidden>Grounds</hidden>
+            	<span class="badge badge-dark" data-toggle="Grounds" data-placement="top" title="Grounds">G</span>
             <% else %>
-            <span class="badge badge-dark" data-toggle="tooltip" data-placement="top" title="Code Compliance"> C </span>
+            	<hidden hidden>code compliance</hidden>
+            	<span class="badge badge-dark" data-toggle="tooltip" data-placement="top" title="Code Compliance"> C </span>
             <% end %>
 		</td>
 		<td>
 			<% if(service_request.status != 2) #if(not archived) %>
 				<% if(service_request.alert_date < Date.today) #if(expired) %>
-	              <span class="label label-danger"  data-toggle="tooltip" data-placement="top" title="Expired on: <%= service_request.alert_date %>"><i class="fa fa-exclamation"></i></span>
+	              <span class="label label-danger" data-toggle="tooltip" data-placement="top" title="Expired on: <%= service_request.alert_date %>"><i class="fa fa-exclamation"></i></span>
 	            <% elsif (service_request.warning_date <= Date.today) #if(expiring) %>
 	              <span class="label label-warning" data-toggle="tooltip" data-placement="top" title="Expiring"><i class="fa fa-exclamation"></i></span>
 	            <% end %>
