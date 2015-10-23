@@ -18,7 +18,7 @@ gem 'cancancan', '~> 1.10'
 
 # Gems used only for assets and not required
 # in production environments by default.
-group :assets do
+
   
   #gem 'sass-rails',   '~> 3.2.3' -- UPDATED ON 10/18/2015
   gem 'sass-rails',   '5.0.2'
@@ -26,7 +26,7 @@ group :assets do
   #gem 'coffee-rails', '~> 3.2.1' -- UPDATED ON 10/18/2015
   gem 'coffee-rails', '4.1.0'
   
-  gem 'test-unit'
+  #gem 'test-unit'
   
   # BootStrap
   # gem "therubyracer"
@@ -38,7 +38,7 @@ group :assets do
 
   #gem 'uglifier', '>= 1.0.3' -- UPDATED ON 10/18/2015
   gem 'uglifier',     '2.5.3'
-end
+
 
 #gem 'jquery-rails' -- UPDATED ON 10/18/2015
 gem 'jquery-rails'
