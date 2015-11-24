@@ -9,7 +9,7 @@
 </p>
 
 <small class="pull-right"> Showing a total of <%= @service_requests.length %> records </small>
-<table id="all_items" class="table table-striped">
+<table id="all_items" class="table table-striped table-hover">
 <thead>  
 	<tr>
 		<th>Address</th>
@@ -31,11 +31,14 @@
 		<td><%= truncate(service_request.description, length: 50) %></td>
 		<td>
 			<% if(service_request.status == 2) # if(archived) %>
-            <span class="label label-light" data-toggle="tooltip" data-placement="top" title="Closed">&nbsp;</span>
+				<hidden hidden>closed</hidden>
+            	<span class="label label-light" data-toggle="tooltip" data-placement="top" title="Closed">&nbsp;</span>
             <% elsif (service_request.status == 3) # if(pending) %>
-            <span class="label label-yellow" data-toggle="tooltip" data-placement="top" title="Pending">&nbsp;</span>
+            	<hidden hidden>pending</hidden>
+            	<span class="label label-yellow" data-toggle="tooltip" data-placement="top" title="Pending">&nbsp;</span>
             <% else #if(open) %>
-            <span class="label label-success" data-toggle="tooltip" data-placement="top" title="Open">&nbsp;</span>
+            	<hidden hidden>open</hidden>
+            	<span class="label label-success" data-toggle="tooltip" data-placement="top" title="Open">&nbsp;</span>
             <% end #ends if(statuses) %>
 		</td>
 		<td>
@@ -56,8 +59,10 @@
 		<td>
 			<% if(service_request.status != 2) #if(not archived) %>
 				<% if(service_request.alert_date < Date.today) #if(expired) %>
+					<hidden hidden>expired</hidden>
 	              <span class="label label-danger" data-toggle="tooltip" data-placement="top" title="Expired on: <%= service_request.alert_date %>"><i class="fa fa-exclamation"></i></span>
 	            <% elsif (service_request.warning_date <= Date.today) #if(expiring) %>
+	            	<hidden hidden>expiring</hidden>
 	              <span class="label label-warning" data-toggle="tooltip" data-placement="top" title="Expiring"><i class="fa fa-exclamation"></i></span>
 	            <% end %>
 			<% end %>

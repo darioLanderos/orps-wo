@@ -30,11 +30,11 @@
           <td><%= truncate(service_request.description, length: 50) %></td>
           <td>
             <% if(service_request.status == 2) # if(archived) %>
-            <span class="label label-light" data-toggle="tooltip" data-placement="top" title="Closed">&nbsp;</span>
+              <span class="label label-light" data-toggle="tooltip" data-placement="top" title="Closed">&nbsp;</span>
             <% elsif (service_request.status == 3) # if(pending) %>
-            <span class="label label-yellow" data-toggle="tooltip" data-placement="top" title="Pending">&nbsp;</span>
+              <span class="label label-yellow" data-toggle="tooltip" data-placement="top" title="Pending">&nbsp;</span>
             <% else #if(open) %>
-            <span class="label label-success" data-toggle="tooltip" data-placement="top" title="Open">&nbsp;</span>
+              <span class="label label-success" data-toggle="tooltip" data-placement="top" title="Open">&nbsp;</span>
             <% end #ends if(statuses) %>
           </td>
           <td>
