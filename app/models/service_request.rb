@@ -7,28 +7,27 @@ class ServiceRequest < ActiveRecord::Base
   validates_presence_of :address, :title, :description, :status, :warning_date, :alert_date, :category_id
   
   def self.search_by_address(search_term, page_number, per_page_num, order_criteria)
-    paginate :per_page =>per_page_num, :page => page_number,
-              :conditions => ["address LIKE ?", "%#{search_term}%"], :order => order_criteria
+    if search_term.blank?
+      paginate(per_page: per_page_num, page: page_number).order("? DESC", order_criteria)
+    else
+      where.("address LIKE ?", search_term).paginate(per_page: per_page_num, page: page_number).order("? DESC", order_criteria)
+    end
   end
   
   def self.search_by_status(search_term, page_number, per_page_num, order_criteria)
     if search_term.blank?
-      paginate :per_page =>per_page_num, :page => page_number,
-                :order => order_criteria
+      paginate(per_page: per_page_num, page: page_number).order("? DESC", order_criteria)
     else
-      paginate :per_page =>per_page_num, :page => page_number,
-                :conditions => ["status = ?", "#{search_term}"], :order => order_criteria
+      where.("status = ?", search_term).paginate(per_page: per_page_num, page: page_number).order("? DESC", order_criteria)
     end
     
   end
   
   def self.search_by_category(search_term, page_number, per_page_num, order_criteria)
     if search_term.blank?
-      paginate :per_page =>per_page_num, :page => page_number,
-                :order => order_criteria
+      paginate(per_page: per_page_num, page: page_number).order("? DESC", order_criteria)
     else
-      paginate :per_page =>per_page_num, :page => page_number,
-                :conditions => ["category_id = ?", "#{search_term}"], :order => order_criteria
+      where.("category_id = ?", search_term).paginate(per_page: per_page_num, page: page_number).order("? DESC", order_criteria)
     end
   end
 end
