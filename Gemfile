@@ -39,7 +39,6 @@ gem 'cancancan', '~> 1.10'
   #gem 'uglifier', '>= 1.0.3' -- UPDATED ON 10/18/2015
   gem 'uglifier',     '2.5.3'
 
-
 #gem 'jquery-rails' -- UPDATED ON 10/18/2015
 gem 'jquery-rails'
 
